@@ -1,10 +1,10 @@
 -- PROJE: Kargo Takip Sistemi Veri Tabani Tasarimi
--- ER Diyagramina uygun olarak 4 ana tablo (Subeler, Musteriler, Kargolar, KargoHareketleri) üzerinde kurgulanmistir.
+-- ER Diyagramina uygun olarak 4 ana tablo (Subeler, Musteriler, Kargolar, KargoHareketleri) Ã¼zerinde kurgulanmistir.
 
--- BÖLÜM 1: Stored Procedures ile musteri ekleme ve durum guncelleme gibi operasyonel sureclerin yonetimi.
--- BÖLÜM 2: Karmasik sorgulari basitlestiren ve sube yogunluk raporlari sunan View yapilari.
--- BÖLÜM 3: Veri guvenligi (silme engeli) ve otomasyon (otomatik hareket kaydi) saglayan Trigger'lar.
--- BÖLÜM 4: KDV hesaplama ve istatistiksel analiz yapan kullanici tanimli fonksiyonlar (UDF).
+-- BÃ–LÃœM 1: Stored Procedures ile musteri ekleme ve durum guncelleme gibi operasyonel sureclerin yonetimi.
+-- BÃ–LÃœM 2: Karmasik sorgulari basitlestiren ve sube yogunluk raporlari sunan View yapilari.
+-- BÃ–LÃœM 3: Veri guvenligi (silme engeli) ve otomasyon (otomatik hareket kaydi) saglayan Trigger'lar.
+-- BÃ–LÃœM 4: KDV hesaplama ve istatistiksel analiz yapan kullanici tanimli fonksiyonlar (UDF).
 
 USE master;
 GO
@@ -29,7 +29,7 @@ CREATE TABLE Subeler (
 );
 GO
 
--- TABLO 2: MUSTERÝLER
+-- TABLO 2: MUSTERILER
 CREATE TABLE Musteriler (
     MusteriID INT PRIMARY KEY IDENTITY(1,1),
     AdSoyad NVARCHAR(100),
@@ -75,26 +75,26 @@ GO
 -- =============================================
 
 INSERT INTO Subeler (SubeAdi, Sehir) VALUES 
-('Merkez Þube', 'Balýkesir'),
-('Kampüs Þube', 'Balýkesir'),
-('Alsancak Þube', 'Ýzmir');
+('Merkez Ãžube', 'Balikesir'),
+('KampÃ¼s Ãžube', 'Balikesir'),
+('Alsancak Ãžube', 'Izmir');
 
 INSERT INTO Musteriler (AdSoyad, Telefon, Adres) VALUES 
-('Ahmet Yýlmaz', '5551234567', 'Atatürk Mah. No:1'),
-('Ayþe Demir', '5559876543', 'Cumhuriyet Cad. No:5'),
-('Mehmet Kaya', '5550001122', 'Konak Meydaný No:3');
+('Ahmet Yilmaz', '5551234567', 'Ataturk Mah. No:1'),
+('Ayse Demir', '5559876543', 'Cumhuriyet Cad. No:5'),
+('Mehmet Kaya', '5550001122', 'Konak Meydani No:3');
 
 INSERT INTO Kargolar (GondericiID, AliciID, CikisSubeID, KargoIcerik, AgirlikKG, Ucret, Durum) VALUES 
 (1, 2, 1, 'Kitap Kolisi', 5.5, 150.00, 'Yolda'),
-(2, 3, 2, 'Elektronik Eþya', 1.2, 75.50, 'Teslim Edildi');
+(2, 3, 2, 'Elektronik Esya', 1.2, 75.50, 'Teslim Edildi');
 
 INSERT INTO KargoHareketleri (KargoID, IslemSubeID, Aciklama) VALUES 
-(1, 1, 'Kargo þubeden teslim alýndý'),
-(1, 1, 'Kargo araca yüklendi');
+(1, 1, 'Kargo subeden teslim alindi'),
+(1, 1, 'Kargo araca yÃ¼klendi');
 GO
 
 -- =============================================
--- BÖLÜM 1: STORED PROCEDURES
+-- BÃ–LÃœM 1: STORED PROCEDURES
 -- =============================================
 
 -- 1. SP
@@ -129,7 +129,7 @@ END;
 GO
 
 -- =============================================
--- BÖLÜM 2: VIEWS
+-- BÃ–LÃœM 2: VIEWS
 -- =============================================
 
 -- 1. View
@@ -159,7 +159,7 @@ GROUP BY S.SubeAdi;
 GO
 
 -- =============================================
--- BÖLÜM 3: TRIGGERS
+-- BÃ–LÃœM 3: TRIGGERS
 -- =============================================
 
 -- 1. Trigger
@@ -168,7 +168,7 @@ ON Kargolar
 INSTEAD OF DELETE
 AS
 BEGIN
-    PRINT 'Güvenlik nedeniyle kargo kayýtlarý silinemez!';
+    PRINT 'GÃ¼venlik nedeniyle kargo kayitlari silinemez!';
 END;
 GO
 
@@ -193,13 +193,13 @@ AFTER INSERT, UPDATE
 AS
 BEGIN
     UPDATE Kargolar 
-    SET KargoIcerik = KargoIcerik + ' (ÖZEL)' 
+    SET KargoIcerik = KargoIcerik + ' (Ã–ZEL)' 
     WHERE Ucret > 1000 AND KargoID IN (SELECT KargoID FROM inserted);
 END;
 GO
 
 -- =============================================
--- BÖLÜM 4: FUNCTIONS
+-- BÃ–LÃœM 4: FUNCTIONS
 -- =============================================
 
 -- 1. Function
@@ -233,7 +233,7 @@ RETURN
 GO
 
 -- =============================================
--- SON: ÖRNEK SORGULAR (NESTED SELECTS)
+-- SON: ORNEK SORGULAR (NESTED SELECTS)
 -- =============================================
 
 -- 1. Nested Select
@@ -249,4 +249,5 @@ SELECT * FROM Kargolar
 WHERE KargoID = (
     SELECT TOP 1 KargoID FROM KargoHareketleri ORDER BY IslemTarihi DESC
 );
+
 GO
