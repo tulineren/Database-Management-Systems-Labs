@@ -1,15 +1,15 @@
--- 1. SORU: Personel tablosundan ad ve soyadý birleþtirerek tek bir sütunda listeleme.
-USE CENG_SýnavSoruBankasi;
+-- 1. SORU: Personel tablosundan ad ve soyadi birlestirerek tek bir sutunda listeleme.
+USE CENG_SinavSoruBankasi;
 GO
 
 SELECT 
-    CONCAT(ad, ' ', soyad) AS "Personel Adý ve Soyadý"
+    CONCAT(ad, ' ', soyad) AS "Personel Adi ve Soyadi"
 FROM 
     personel;
 
 
--- 2. SORU: Proje adlarýný küçük harfe (LOWER) dönüþtürerek sorgulama.
-USE CENG_SýnavSoruBankasi;
+-- 2. SORU: Proje adlarini kucuk harfe (LOWER) donusturerek sorgulama.
+USE CENG_SinavSoruBankasi;
 GO
 
 SELECT 
@@ -18,8 +18,8 @@ FROM
     proje;
 
 
--- 3. SORU: Personel maaþlarýný benzersiz (DISTINCT) deðerler olarak listeleme.
-USE CENG_SýnavSoruBankasi;
+-- 3. SORU: Personel maaslarini benzersiz (DISTINCT) degerler olarak listeleme.
+USE CENG_SinavSoruBankasi;
 GO
 
 SELECT 
@@ -28,8 +28,8 @@ FROM
     personel;
 
 
--- 4. SORU: Belirli bir yýl ve ayda (Örn: Mayýs 2002) iþe baþlayan personelleri filtreleme.
-USE CENG_SýnavSoruBankasi;
+-- 4. SORU: Belirli bir yil ve ayda (Ã–rn: Mayis 2002) ise baslayan personelleri filtreleme.
+USE CENG_SinavSoruBankasi;
 GO
 
 SELECT *
@@ -39,21 +39,21 @@ WHERE
     AND MONTH(baslama_tarihi) = 5;
 
 
--- 5. SORU: Birim bazlý çalýþan sayýlarýný gruplandýrarak raporlama.
-USE CENG_SýnavSoruBankasi;
+-- 5. SORU: Birim bazli calisan sayilarini gruplandirarak raporlama.
+USE CENG_SinavSoruBankasi;
 GO
 
 SELECT 
     birim_no,
-    COUNT(*) AS KackisCalisiyor
+    COUNT(*) AS KackisiCalisiyor
 FROM 
     personel
 GROUP BY 
     birim_no;
 
 
--- 6. SORU: Birden fazla çocuðu olan personellerin ad, soyad ve çocuk sayýlarýný JOIN kullanarak listeleme.
-USE CENG_SýnavSoruBankasi;
+-- 6. SORU: Birden fazla cocugu olan personellerin ad, soyad ve Ã§ocuk sayilarini JOIN kullanarak listeleme.
+USE CENG_SinavSoruBankasi;
 GO
 
 SELECT 
@@ -71,13 +71,13 @@ HAVING
 
 
 
--- 7. SORU: Çalýþan sayýsý 5'ten az olan birimleri HAVING kullanarak filtreleme.
-USE CENG_SýnavSoruBankasi;
+-- 7. SORU: Calisan sayiyi 5'ten az olan birimleri HAVING kullanarak filtreleme.
+USE CENG_SinavSoruBankasi;
 GO
 
 SELECT 
     b.birim_ad, 
-    COUNT(p.personel_no) AS "Toplam Calýsan Sayýsý"
+    COUNT(p.personel_no) AS "Toplam Calisan Sayisi"
 FROM 
     personel AS p
 INNER JOIN 
@@ -89,14 +89,14 @@ HAVING
 
 
 
--- 8. SORU: Ýl ve ilçe bazlý çalýþan daðýlýmýný çoklu JOIN yapýsý ile analiz etme.
-USE CENG_SýnavSoruBankasi;
+-- 8. SORU: il ve ilÃ§e bazli calisan dagilimini coklu JOIN yapisi ile analiz etme.
+USE CENG_SinavSoruBankasi;
 GO
 
 SELECT 
     ic.ilce_ad, 
     i.il_ad, 
-    COUNT(p.personel_no) AS "Toplam Calisan Sayýsý"
+    COUNT(p.personel_no) AS "Toplam Calisan Sayisi"
 FROM 
     personel AS p
 INNER JOIN 
@@ -110,9 +110,9 @@ HAVING
 
 
 
--- 9. SORU: Personel, görevlendirme, proje ve birim tablolarýný birleþtirerek yeni bir fiziksel tablo (PersonelProjeListesi) oluþturma.
--- (1. Adým: Tabloyu oluþturma)
-USE CENG_SýnavSoruBankasi;
+-- 9. SORU: Personel, gorevlendirme, proje ve birim tablolarini birlestirerek yeni bir fiziksel tablo (PersonelProjeListesi) olusturma.
+-- (1. Adim: Tabloyu olusturma)
+USE CENG_SinavSoruBankasi;
 GO
 
 SELECT 
@@ -137,5 +137,6 @@ WHERE
     AND p.unvan_no = u.unvan_no 
     AND p.birim_no = b.birim_no;
 
--- (2. Adým: Tabloyu çaðýrma)
+-- (2. Adim: Tabloyu cagirma)
+
 SELECT * FROM PersonelProjeListesi;
