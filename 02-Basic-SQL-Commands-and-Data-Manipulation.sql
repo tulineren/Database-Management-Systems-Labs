@@ -1,4 +1,4 @@
--- 1. SORU: PERSONEL tablosunun DDL komutlarýyla oluþturulmasý ve örnek kayýtlarýn INSERT edilmesi.-- Önce tablo varsa temizleyelim (Hata almamak için)
+-- 1. SORU: PERSONEL tablosunun DDL komutlariyla olusturulmasi ve ornek kayitlarin INSERT edilmesi.
 IF OBJECT_ID('PERSONEL', 'U') IS NOT NULL 
 DROP TABLE PERSONEL;
 
@@ -10,10 +10,10 @@ CREATE TABLE PERSONEL (
     cinsiyet CHAR(1), -- 'E' veya 'B' tek karakter
     sehir VARCHAR(50),
     ulke VARCHAR(50),
-    maas DECIMAL(10, 2) -- Para birimi için Decimal kullanýmý uygundur
+    maas DECIMAL(10, 2) -- Para birimi icin Decimal kullanimi uygundur
 );
 
--- Veri Giriþleri (INSERT)
+-- Veri Girisleri (INSERT)
 INSERT INTO PERSONEL (id, ad, soyad, yas, cinsiyet, sehir, ulke, maas) VALUES
 (2, 'Ahmet', 'Yilmaz', 20, 'E', 'Ankara', 'Turkiye', 2000.00),
 (3, 'Mehmet', 'Efe', 22, 'E', 'Bolu', 'Turkiye', 2000.00),
@@ -27,11 +27,11 @@ INSERT INTO PERSONEL (id, ad, soyad, yas, cinsiyet, sehir, ulke, maas) VALUES
 (11, 'Hatice', 'Topcu', 26, 'B', 'Hatay', 'Turkiye', 2200.00),
 (12, 'Gulsum', 'Demir', 35, 'B', 'Adana', 'Turkiye', 2000.00);
 
--- tabloyu görelim
+-- tabloyu gÃ¶relim
 SELECT * FROM PERSONEL;
 
 
--- 2. SORU: Belirli bir ülke kriterine göre maaþlarda %10 oranýnda UPDATE iþlemi.
+-- 2. SORU: Belirli bir ulke kriterine gÃ¶re maaslarda %10 oraninda UPDATE islemi.
 UPDATE PERSONEL 
 SET maas = maas * 1.10 
 WHERE ulke = 'Turkiye';
@@ -42,7 +42,7 @@ SELECT * FROM PERSONEL
 WHERE cinsiyet = 'E';
 
 
--- 4. SORU: String fonksiyonlarý (LOWER) ve operatörler kullanarak dinamik mail adresi oluþturma.
+-- 4. SORU: String fonksiyonlari (LOWER) ve operatorler kullanarak dinamik mail adresi olusturma.
 SELECT 
     ad, 
     soyad, 
@@ -50,7 +50,7 @@ SELECT
 FROM PERSONEL;
 
 
--- 5-6. SORU: BETWEEN ve IN operatörleri ile belirli aralýklarda veri filtreleme.
+-- 5-6. SORU: BETWEEN ve IN operatÃ¶rleri ile belirli araliklarda veri filtreleme.
 SELECT * FROM PERSONEL 
 WHERE maas BETWEEN 2000 AND 3500;
 
@@ -85,10 +85,10 @@ SELECT
 FROM PERSONEL;
 
 
--- 11. SORU: COUNT ve AVG gibi agregasyon fonksiyonlarý ile veri analizi.
+-- 11. SORU: COUNT ve AVG gibi agregasyon fonksiyonlari ile veri analizi.
 SELECT 
     COUNT(*) AS Sayi, 
-    AVG(yas) AS Yas_Ortalamasý 
+    AVG(yas) AS Yas_Ortalamasi 
 FROM PERSONEL;
 
 
@@ -115,7 +115,7 @@ SELECT SUM(maas) AS Toplam_Maas
 FROM PERSONEL;
 
 
--- 16-20. SORU: GROUP BY ve HAVING yapýlarý kullanýlarak ülke ve cinsiyet bazlý geliþmiþ raporlama.
+-- 16-20. SORU: GROUP BY ve HAVING yapilari kullanilarak Ã¼lke ve cinsiyet bazli gelismis raporlama.
 SELECT ulke, COUNT(*) AS Kisi_Sayisi 
 FROM PERSONEL 
 GROUP BY ulke;
@@ -154,4 +154,5 @@ SELECT
 FROM PERSONEL
 WHERE cinsiyet = 'E'
 GROUP BY ulke
+
 HAVING COUNT(*) < 2;
